@@ -1,0 +1,19 @@
+{
+  "name": "http-stream-nodejs",
+  "version": "1.0.0",
+  "description": "A monolithic application that reads and writes streams of multipart form-data for media storage and display.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marlonaesparza/http-stream-nodejs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marlonaesparza/http-stream-nodejs/issues"
+  },
+  "homepage": "https://github.com/marlonaesparza/http-stream-nodejs#readme"
+}
