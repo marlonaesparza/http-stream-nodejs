@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#post-btn-cont {
+  width: 15%;
+  margin: auto;
+}
+
+#post-btn {
+  width: 100%;
+}
+
+#media-cont {
+  display: grid;
+  grid-template-columns: 8fr 4fr;
+}
+
+.hidden {
+  display: none;
+}

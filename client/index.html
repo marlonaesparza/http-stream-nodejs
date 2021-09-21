@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--  -->
+    <link rel='stylesheet' href='./styles/layout.css'>
+    <!--  -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <!--  -->
+    <meta charset='utf8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--  -->
+  </head>
+  <body>
+    <!--  -->
+    <header id='header-cont'>
+      <div id='post-btn-cont'>
+        <button id='post-btn'>Create Post</button>
+      </div>
+    </header>
+    <!--  -->
+    <main id='media-cont'>
+      <!--  -->
+      <section id='media-player-cont'>
+        <div id='current-media'>
+          [ current media ]
+        </div>
+        <div id='current-media-info'>
+          [ current media info ]
+        </div>
+      </section>
+      <!--  -->
+      <section id='media-post-cont' class='hidden'>
+        <form id='media-post-form'>
+          <label for='post-txt'>Say something:</label><br/>
+          <textarea type='text' id='post-txt' name='post-txt' class='file-input'></textarea><br/>
+          <label for='post-media'>Share a moment:</label><br/>
+          <input type='file' id='post-media' name='post-media' class='file-input'/><br/>
+          <input type='submit'>
+        </form>
+      </section>
+      <!--  -->
+      <section id='media-list-cont'>
+        <div id='media-srch-cont'>
+          <input id='srch-inp' name='srch-inp' type='text'>
+        </div>
+        <div id='media-rslts-cont'>
+          [ media results ]
+        </div>
+      </section>
+      <!--  -->
+    </main>
+
+    <!--  -->
+    <script src='./scripts/postControls.js'></script>
+    <script src='./scripts/postForm.js'></script>
+  </body>
+</html>

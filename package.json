@@ -4,7 +4,10 @@
   "description": "A monolithic application that reads and writes streams of multipart form-data for media storage and display.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev-client": "live-server ./client",
+    "dev-server": "node ./server/index.js",
+    "clean-temp": "rm -r ./server/media/tempUpload/*"
   },
   "repository": {
     "type": "git",
@@ -15,5 +18,14 @@
   "bugs": {
     "url": "https://github.com/marlonaesparza/http-stream-nodejs/issues"
   },
-  "homepage": "https://github.com/marlonaesparza/http-stream-nodejs#readme"
+  "homepage": "https://github.com/marlonaesparza/http-stream-nodejs#readme",
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "live-server": "^1.2.1"
+  },
+  "dependencies": {
+    "cloudconvert": "^2.2.4",
+    "formidable": "^1.2.2",
+    "parse-multipart": "^1.0.4"
+  }
 }
