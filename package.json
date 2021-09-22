@@ -26,6 +26,8 @@
   "dependencies": {
     "cloudconvert": "^2.2.4",
     "formidable": "^1.2.2",
-    "parse-multipart": "^1.0.4"
+    "parse-multipart": "^1.0.4",
+    "pg": "^8.7.1",
+    "sequelize": "^6.6.5"
   }
 }

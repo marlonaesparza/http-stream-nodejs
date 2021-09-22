@@ -1,4 +1,6 @@
 require('dotenv').config({path: `${__dirname}/../.env`});
+require('./../database/index');
+
 const http = require('http');
 const router = require('./api/router');
 

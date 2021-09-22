@@ -1,6 +1,7 @@
 const postForm = document.getElementById('media-post-form');
 const txtInput = document.getElementById('post-txt');
 const mediaInput = document.getElementById('post-media');
+const vidTstCont = document.getElementById('video-tst-cont');
 
 // ------------------------ //
 
@@ -24,20 +25,43 @@ postForm.addEventListener('submit', async (e) => {
   formData.append('text', txt);
   formData.append('media', media);
 
-  return ajaxPostForm(formData);
+  return ajaxPostForm(formData, (form, data) => {
+    form.reset();
+    mediaPostCont.classList.add('hidden');
+    mediaPlayerCont.classList.remove('hidden');
+    postButton.textContent = 'Create Post';
+
+    console.log('POST RESPONSE DATA:', data);
+    const { text, media, createdAt } = JSON.parse(data);
+    console.log('MEDIA:', JSON.stringify(media));
+
+    if (media.split('.')[1] === 'mp4') {
+      const videoEl = document.createElement('video');
+      videoEl.setAttribute('controls', '');
+      videoEl.setAttribute('width', '500');
+
+      var sourceEl = document.createElement('source');
+      sourceEl.setAttribute('src', media);
+      sourceEl.setAttribute('type', 'video/mp4');
+      console.log('GET ATTRIBUTE:', sourceEl.getAttribute('src'));
+
+      videoEl.appendChild(sourceEl);
+      vidTstCont.appendChild(videoEl);
+    };
+  });
 });
 
 // FORM POST METHOD
 
-const ajaxPostForm = (formData) => {
+const ajaxPostForm = (formData, cb) => {
   $.ajax({
     type: 'POST',
     data: formData,
     url: 'http://localhost:8000/post/create',
     contentType: false,
     processData: false,
-    success: () => {
-      postForm.reset();
+    success: (data) => {
+      cb(postForm, data);
     },
     error: (e) => {
       console.log('Post error:', e);
