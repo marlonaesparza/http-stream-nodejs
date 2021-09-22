@@ -16,12 +16,8 @@ const router = (req, res) => {
     const parts = url.parse(reqUrl, true);
     const { pathname, query } = parts;
 
-    console.log('GET path:', pathname);
-    
     if (pathname === '/media') {
       const { file } = query;
-      console.log('GET media file:', file);
-
       const filePath = `${__dirname}/../media/tempUpload/${file}`;
 
       return fs.readFile(filePath, (err, chunk) => {
@@ -58,74 +54,42 @@ const router = (req, res) => {
         const formMedia = files.media;
         const { name, type, path } = formMedia;
 
-        console.log('Form txt:', formText);
-        console.log('Form media:', {name, type, path});
-
         const post = {
           text: formText,
           mediaPath: path
         };
 
-        if (type.includes('video')) {
-          if (type.includes('mp4')) {
-            return PostDAO.createPost(post)
-              .then(({ dataValues }) => {
-                console.log('MP4 POST Success:', inspect(dataValues));
+        if (type.includes('jpeg') || type.includes('mp4')) {
+          return PostDAO.createPost(post)
+            .then(({ dataValues }) => {
+              const getFileUrlPath = (path) => {
+                let pathParts = path.split('/');
+                let filePart = pathParts[pathParts.length - 1];
+                return `http://localhost:8000/media?file=${filePart}`;
+              };
 
-                const getFileUrlPath = (path) => {
-                  let pathParts = path.split('/');
-                  let filePart = pathParts[pathParts.length - 1];
-                  return `http://localhost:8000/media?file=${filePart}`;
-                };
+              const { text, mediaPath, createdAt } = dataValues;
+              const media = getFileUrlPath(mediaPath);
+              const post = { text, media, createdAt };
 
-                const { text, mediaPath, createdAt } = dataValues;
-                const media = getFileUrlPath(mediaPath);
-                const post = { text, media, createdAt };
-
-                res.writeHead(201, headers);
-                res.write(JSON.stringify(post));
-                res.end();
-                return;
-              })
-              .catch((error) => {
-                console.log(inspect(error));
-                res.writeHead(500, headers);
-                res.end();
-                return;
-              });
-          } else {
+              res.writeHead(201, headers);
+              res.write(JSON.stringify(post));
+              res.end();
+              return;
+            })
+            .catch((error) => {
+              console.log(inspect(error));
+              res.writeHead(500, headers);
+              res.end();
+              return;
+            });
+        } else {
+          if (type.includes('video')) {
             // convert media to mp4
             res.end();
             return;
-          };
-        } else if (type.includes('image')) {
-          if (type.includes('jpeg')) {
-            return PostDAO.createPost(post)
-              .then(({ dataValues }) => {
-                console.log('JPG POST Success:', inspect(dataValues));
-
-                const getFileUrlPath = (path) => {
-                  let pathParts = path.split('/');
-                  let filePart = pathParts[pathParts.length - 1];
-                  return `http://localhost:8000/media?file=${filePart}`;
-                };
-
-                const { text, mediaPath, createdAt } = dataValues;
-                const media = getFileUrlPath(mediaPath);
-                const post = { text, media, createdAt };
-
-                res.writeHead(201, headers);
-                res.write(JSON.stringify(post));
-                res.end();
-                return;
-              })
-              .catch((error) => {
-                console.log(inspect(error));
-                res.writeHead(500, headers);
-                res.end();
-                return;
-              });
-          } else {
+          } else if (type.includes('image')) {
+            // convert media to jpeg
             res.end();
             return;
           };

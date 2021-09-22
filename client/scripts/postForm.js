@@ -31,9 +31,7 @@ postForm.addEventListener('submit', async (e) => {
     mediaPlayerCont.classList.remove('hidden');
     postButton.textContent = 'Create Post';
 
-    console.log('POST RESPONSE DATA:', data);
     const { text, media, createdAt } = JSON.parse(data);
-    console.log('MEDIA:', JSON.stringify(media));
 
     if (media.split('.')[1] === 'mp4') {
       const videoEl = document.createElement('video');
@@ -43,7 +41,6 @@ postForm.addEventListener('submit', async (e) => {
       var sourceEl = document.createElement('source');
       sourceEl.setAttribute('src', media);
       sourceEl.setAttribute('type', 'video/mp4');
-      console.log('GET ATTRIBUTE:', sourceEl.getAttribute('src'));
 
       videoEl.appendChild(sourceEl);
       vidTstCont.appendChild(videoEl);
