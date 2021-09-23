@@ -18,7 +18,7 @@ const router = (req, res) => {
 
     if (pathname === '/media') {
       const { file } = query;
-      const filePath = `${__dirname}/../media/tempUpload/${file}`;
+      const filePath = `${__dirname}/../media/${file}`;
 
       return fs.readFile(filePath, (err, chunk) => {
         if (err) {
@@ -38,7 +38,7 @@ const router = (req, res) => {
 
     if (reqUrl === '/post/create') {
       const formParser = new IncomingForm({
-        uploadDir: `${__dirname}/../media/tempUpload`,
+        uploadDir: `${__dirname}/../media`,
         multiples: true,
         keepExtensions: true
       });
@@ -50,12 +50,14 @@ const router = (req, res) => {
           return;
         };
 
-        const formText = fields.text;
+        const formTitle = fields.title;
+        const formDesc = fields.description;
         const formMedia = files.media;
-        const { name, type, path } = formMedia;
+        const { type, path } = formMedia;
 
         const post = {
-          text: formText,
+          title: formTitle,
+          description: formDesc,
           mediaPath: path
         };
 
@@ -68,9 +70,9 @@ const router = (req, res) => {
                 return `http://localhost:8000/media?file=${filePart}`;
               };
 
-              const { text, mediaPath, createdAt } = dataValues;
+              const { title, description, mediaPath, createdAt } = dataValues;
               const media = getFileUrlPath(mediaPath);
-              const post = { text, media, createdAt };
+              const post = { title, description, media, createdAt };
 
               res.writeHead(201, headers);
               res.write(JSON.stringify(post));

@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev-client": "live-server ./client",
     "dev-server": "node ./server/index.js",
-    "clean-temp": "rm -r ./server/media/tempUpload/*"
+    "clean-temp": "rm -r ./server/media/*"
   },
   "repository": {
     "type": "git",

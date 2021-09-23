@@ -8,9 +8,14 @@ const Post = connection.define('Post', {
     unique: true,
     primaryKey: true
   },
-  text: {
+  title: {
+    type: sequelize.DataTypes.STRING(30),
+    allowNull: false,
+    unique: false
+  },
+  description: {
     type: sequelize.DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
     unique: false
   },
   mediaPath: {

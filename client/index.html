@@ -3,6 +3,7 @@
   <head>
     <!--  -->
     <link rel='stylesheet' href='./styles/layout.css'>
+    <link rel='stylesheet' href='./styles/mediaRslts.css'>
     <!--  -->
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <!--  -->
@@ -14,7 +15,7 @@
     <!--  -->
     <header id='header-cont'>
       <div id='post-btn-cont'>
-        <button id='post-btn'>Create Post</button>
+        <button id='post-btn'>Upload</button>
       </div>
     </header>
     <!--  -->
@@ -31,10 +32,15 @@
       <!--  -->
       <section id='media-post-cont' class='hidden'>
         <form id='media-post-form'>
-          <label for='post-txt'>Say something:</label><br/>
-          <textarea type='text' id='post-txt' name='post-txt' class='file-input'></textarea><br/>
+          <labe for='post-title'>Title:</labe>
+          <input type='text' id='post-title' name='post-title' class='file-input'><br/>
+          
+          <label for='post-description'>Description:</label><br/>
+          <textarea type='text' id='post-description' name='post-description' class='file-input'></textarea><br/>
+          
           <label for='post-media'>Share a moment:</label><br/>
           <input type='file' id='post-media' name='post-media' class='file-input'/><br/>
+          
           <input type='submit'>
         </form>
       </section>
@@ -49,11 +55,10 @@
       </section>
       <!--  -->
     </main>
-    <div id='video-tst-cont'>
-      
-    </div>
-
     <!--  -->
+    <script src='./scripts/variables.js'></script>
+    <script src='./scripts/components.js'></script>
+    <script src='./scripts/callbacks.js'></script>
     <script src='./scripts/postControls.js'></script>
     <script src='./scripts/postForm.js'></script>
   </body>

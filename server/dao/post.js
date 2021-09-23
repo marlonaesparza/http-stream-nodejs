@@ -6,10 +6,7 @@ class PostDAO {
     this.getPosts = this.getPosts.bind(this);
   };
 
-  createPost(postInfo) {
-    let { text, mediaPath } = postInfo;
-    let post = { text, mediaPath };
-
+  createPost(post) {
     return Post.create(post);
   };
 

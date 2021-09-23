@@ -1,51 +1,23 @@
-const postForm = document.getElementById('media-post-form');
-const txtInput = document.getElementById('post-txt');
-const mediaInput = document.getElementById('post-media');
-const vidTstCont = document.getElementById('video-tst-cont');
-
-// ------------------------ //
-
 // FORM SUBMIT LISTENER //
 
 postForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const txt = txtInput.value;
-  const media = mediaInput.files[0];
+  const titleValidated = validateTitle(titleInput.value);
+  const descValidated = validateDesc(descInput.value);
+  const mediaValidated = await validateMedia(mediaInput.files[0]);
 
-  const txtValidated = validateTxt(txt);
-  const mediaValidated = await validateMedia(media);
-
-  if (!txtValidated || !mediaValidated) {
-    console.log('Form values are not valid.');
+  if (!titleValidated || !descValidated || !mediaValidated) {
+    console.log('Form value(s) are not valid.');
     return;
   };
 
   const formData = new FormData();
-  formData.append('text', txt);
-  formData.append('media', media);
+  formData.append('title', titleInput.value);
+  formData.append('description', descInput.value);
+  formData.append('media', mediaInput.files[0]);
 
-  return ajaxPostForm(formData, (form, data) => {
-    form.reset();
-    mediaPostCont.classList.add('hidden');
-    mediaPlayerCont.classList.remove('hidden');
-    postButton.textContent = 'Create Post';
-
-    const { text, media, createdAt } = JSON.parse(data);
-
-    if (media.split('.')[1] === 'mp4') {
-      const videoEl = document.createElement('video');
-      videoEl.setAttribute('controls', '');
-      videoEl.setAttribute('width', '500');
-
-      var sourceEl = document.createElement('source');
-      sourceEl.setAttribute('src', media);
-      sourceEl.setAttribute('type', 'video/mp4');
-
-      videoEl.appendChild(sourceEl);
-      vidTstCont.appendChild(videoEl);
-    };
-  });
+  return ajaxPostForm(formData, onSuccessfulPost);
 });
 
 // FORM POST METHOD
@@ -61,7 +33,7 @@ const ajaxPostForm = (formData, cb) => {
       cb(postForm, data);
     },
     error: (e) => {
-      console.log('Post error:', e);
+      console.log('POST UPLOAD ERROR - :', e);
     }
   });
 };
@@ -70,8 +42,14 @@ const ajaxPostForm = (formData, cb) => {
 
 // INPUT VALIDATION METHODS //
 
-const validateTxt = (text) => {
-  return text.length < 255 && text.length >= 0 ?
+const validateTitle = (title) => {
+  return title.length < 30 && title.length >= 1 ?
+    true :
+    false;
+};
+
+const validateDesc = (description) => {
+  return description.length < 255 && description.length >= 0 ?
     true :
     false;
 };
