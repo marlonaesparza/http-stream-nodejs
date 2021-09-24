@@ -13,6 +13,7 @@ const createMediaResult = (props) => {
   resultInfoCont.setAttribute('class', 'rslt-info-cont');
   const resultTitle = document.createElement('p');
   resultTitle.setAttribute('class', 'rslt-info');
+  resultTitle.addEventListener('click', onClickMediaResult);
   resultTitle.textContent = `${title}`;
   const resultDesc = document.createElement('p');
   resultDesc.setAttribute('class', 'rslt-info');
@@ -33,9 +34,5 @@ const updateCurrentMedia = (props) => {
   const getMediaType = (string) => string.split('.')[1];
   const mediaType = getMediaType(media);
   
-  const videoEl = document.getElementById('current-video');
-  const sourceEl = document.getElementById('media-mp4')
   const currentVideoEl = currentMedia.removeChild(videoEl);
-
-  
 };

@@ -3,6 +3,7 @@
   <head>
     <!--  -->
     <link rel='stylesheet' href='./styles/layout.css'>
+    <link rel='stylesheet' href='./styles/mediaPlayer.css'>
     <link rel='stylesheet' href='./styles/mediaRslts.css'>
     <!--  -->
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -23,10 +24,14 @@
       <!--  -->
       <section id='media-player-cont'>
         <div id='current-media'>
-          [ current media ]
+          <video id='video' class='video' controls>
+            <source id='video-mp4' type='video/mp4'>
+          </video>
         </div>
         <div id='current-media-info'>
-          [ current media info ]
+          <p id='video-title' class='video-info'>Title:</p>
+          <p id='video-description' class='video-info'>Description:</p>
+          <p id='video-timestamp' class='video-info'>Timestamp:</p>
         </div>
       </section>
       <!--  -->
@@ -38,8 +43,11 @@
           <label for='post-description'>Description:</label><br/>
           <textarea type='text' id='post-description' name='post-description' class='file-input'></textarea><br/>
           
-          <label for='post-media'>Share a moment:</label><br/>
-          <input type='file' id='post-media' name='post-media' class='file-input'/><br/>
+          <label for='post-video'>Upload Video:</label><br/>
+          <input type='file' id='post-video' name='post-video' class='file-input'/><br/>
+
+          <label for='post-thumbnail'>Upload Image (Thumbnail):</label><br/>
+          <input type='file' id='post-thumbnail' name='post-thumbnail' class='file-input'/><br/>
           
           <input type='submit'>
         </form>

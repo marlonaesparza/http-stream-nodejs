@@ -18,7 +18,12 @@ const Post = connection.define('Post', {
     allowNull: false,
     unique: false
   },
-  mediaPath: {
+  videoPath: {
+    type: sequelize.DataTypes.STRING,
+    allowNull: true,
+    unique: false
+  },
+  thumbnailPath: {
     type: sequelize.DataTypes.STRING,
     allowNull: true,
     unique: false
@@ -29,7 +34,7 @@ const Post = connection.define('Post', {
 
 Post.sync({force: true})
   .then(() => {
-    console.log('Posts talbe created succesfully');
+    console.log('Posts table created succesfully.');
   })
 
 module.exports = Post;

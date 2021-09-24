@@ -5,9 +5,10 @@ postForm.addEventListener('submit', async (e) => {
 
   const titleValidated = validateTitle(titleInput.value);
   const descValidated = validateDesc(descInput.value);
-  const mediaValidated = await validateMedia(mediaInput.files[0]);
+  const videoValidated = await validateMedia(videoInput.files[0]);
+  const imageValidated = await validateMedia(imageInput.files[0])
 
-  if (!titleValidated || !descValidated || !mediaValidated) {
+  if (!titleValidated || !descValidated || !videoValidated || imageValidated) {
     console.log('Form value(s) are not valid.');
     return;
   };
@@ -15,7 +16,8 @@ postForm.addEventListener('submit', async (e) => {
   const formData = new FormData();
   formData.append('title', titleInput.value);
   formData.append('description', descInput.value);
-  formData.append('media', mediaInput.files[0]);
+  formData.append('media', videoInput.files[0]);
+  formData.append('media', imageInput.files[0]);
 
   return ajaxPostForm(formData, onSuccessfulPost);
 });

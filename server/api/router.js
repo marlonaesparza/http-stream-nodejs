@@ -50,6 +50,8 @@ const router = (req, res) => {
           return;
         };
 
+        console.log('Incoming Form:', fields, files);
+
         const formTitle = fields.title;
         const formDesc = fields.description;
         const formMedia = files.media;

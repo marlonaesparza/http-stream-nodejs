@@ -2,6 +2,10 @@
   overflow: auto;  
 }
 
+#media-list-cont {
+  padding: 5px;
+}
+
 .rslt-cont {
   display: grid;
   grid-template-columns: 3fr 9fr;
