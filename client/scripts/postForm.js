@@ -5,8 +5,8 @@ postForm.addEventListener('submit', async (e) => {
 
   const titleValidated = validateTitle(titleInput.value);
   const descValidated = validateDesc(descInput.value);
-  const videoValidated = await validateMedia(videoInput.files[0]);
-  const imageValidated = await validateMedia(imageInput.files[0]);
+  const videoValidated = await validateVideo(videoInput.files[0]);
+  const imageValidated = await validateImage(imageInput.files[0]);
 
   if (!titleValidated || !descValidated || !videoValidated || !imageValidated) {
     console.log('Form value(s) are not valid.');
@@ -57,7 +57,11 @@ const validateDesc = (description) => {
     false;
 };
 
-const validateMedia = async (media) => {
+const validateVideo = async (media) => {
+  if (!media) {
+    return false;
+  };
+
   if (media.type.includes('video')) {
     try {
       const vidDuration = await getVideoDuration(media);
@@ -65,17 +69,22 @@ const validateMedia = async (media) => {
 
     } catch(e) {
       console.log(e);
-    }
-  } else if (media.type.includes('image')) {
-    return true;
-  }
-
-  return false;
+      return false;
+    };
+  };
 };
+
+const validateImage = (media) => {
+  if (!media) {
+    return false;
+  };
+
+  return media.type.includes('image') ? true : false;
+}
 
 // ------------------------ //
 
-// INPUT VALIDATION HELPER METHODS //
+// HELPER METHODS //
 
 const getVideoDuration = (video) => {
   return new Promise((resolve, reject) => {

@@ -8,4 +8,13 @@
 
 .video-info {
   padding: 5px;
+  font-size: .9rem;
+}
+
+.info-title {
+  font-size: 1.3rem;
+}
+
+.info-time {
+  font-size: .8rem;
 }

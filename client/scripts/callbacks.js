@@ -1,5 +1,6 @@
 const switchMediaOrPostCont = () => {
   if (currentMediaCont.classList.contains('hidden')) {
+    postForm.reset();
     mediaPostCont.classList.add('hidden');
     currentMediaCont.classList.remove('hidden');
     postButton.textContent = 'Upload';
