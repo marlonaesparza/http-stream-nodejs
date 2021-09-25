@@ -1,9 +1,20 @@
-const onSuccessfulPost = (form, data) => {
+const switchMediaOrPostCont = () => {
+  if (currentMediaCont.classList.contains('hidden')) {
+    mediaPostCont.classList.add('hidden');
+    currentMediaCont.classList.remove('hidden');
+    postButton.textContent = 'Upload';
+    return;
+  } else {
+    currentMediaCont.classList.add('hidden');
+    mediaPostCont.classList.remove('hidden');
+    postButton.textContent = 'Cancel Upload';
+    return;
+  };
+};
+
+const onSuccessfulPost = (form, result) => {
   form.reset();
-  mediaPostCont.classList.add('hidden');
-  mediaPlayerCont.classList.remove('hidden');
-  postButton.textContent = 'Upload';
-  const result = JSON.parse(data);
+  switchMediaOrPostCont();
   allVideos.push(result);
   return createMediaResult(result);
 };
@@ -14,12 +25,7 @@ const onClickMediaResult = (e) => {
   for (let i = 0; i < allVideos.length; i++) {
     let video = allVideos[i];
     if (video.title === targetVideo) {
-      currentVideo = video;
-      videoSource.setAttribute('src', currentVideo.media);
-      videoTitle.textContent = currentVideo.title;
-      videoDesc.textContent = currentVideo.description;
-      videoTimeStamp.textContent = currentVideo.createdAt;
-      return;
+      return updateCurrentMedia(video);
     };
   };
 };

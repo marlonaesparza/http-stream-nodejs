@@ -8,13 +8,13 @@ const imageInput = document.getElementById('post-thumbnail');
 const mediaPostCont = document.getElementById('media-post-cont');
 //////////////////////////
 // CURRENT MEDIA /////////
-const videoEl = documnet.getElementById('video');
+const videoEl = document.getElementById('video');
 const videoSourceEl = document.getElementById('video-mp4');
-const currentMedia = document.getElementById('current-media');
-const currentMediaCont = document.getElementById('media-player-cont');
 const videoTitle = document.getElementById('video-title');
 const videoDesc = document.getElementById('video-description');
 const videoTimeStamp = document.getElementById('video-timestamp');
+const currentMedia = document.getElementById('current-media');
+const currentMediaCont = document.getElementById('media-player-cont');
 const currentMediaInfo = document.getElementById('current-media-info');
 //////////////////////////
 const mediaResultsCont = document.getElementById('media-rslts-cont');

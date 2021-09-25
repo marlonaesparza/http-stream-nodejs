@@ -1,12 +1,12 @@
 const createMediaResult = (props) => {
-  const { title, description , media, createdAt} = props;
+  const { title, description , video, thumbnail, createdAt} = props;
   const resultCont = document.createElement('article');
   resultCont.setAttribute('class', 'rslt-cont');
   const resultThumbCont = document.createElement('div');
   resultThumbCont.setAttribute('class', 'rslt-thumb-cont');
   const resultThumb = document.createElement('img');
   resultThumb.setAttribute('class', 'rslt-thumb')
-  resultThumb.setAttribute('src', media);
+  resultThumb.setAttribute('src', thumbnail);
   resultThumb.setAttribute('alt', title);
   resultThumbCont.appendChild(resultThumb);
   const resultInfoCont = document.createElement('div');
@@ -30,9 +30,12 @@ const createMediaResult = (props) => {
 };
 
 const updateCurrentMedia = (props) => {
-  const { title, description , media, createdAt } = props;
-  const getMediaType = (string) => string.split('.')[1];
-  const mediaType = getMediaType(media);
-  
+  const { title, description , video, thumbnail, createdAt } = props;
   const currentVideoEl = currentMedia.removeChild(videoEl);
+  currentVideoEl.setAttribute('poster', thumbnail);
+  currentVideoEl.setAttribute('src', video);
+  currentMedia.appendChild(currentVideoEl);
+  videoTitle.textContent = `Title: ${title}`;
+  videoDesc.textContent = `Description: ${description}`;
+  videoTimeStamp.textContent = `Timestamp: ${createdAt}`;
 };

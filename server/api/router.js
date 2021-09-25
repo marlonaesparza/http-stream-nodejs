@@ -22,6 +22,7 @@ const router = (req, res) => {
 
       return fs.readFile(filePath, (err, chunk) => {
         if (err) {
+          console.log(inspect(err));
           res.writeHead(400, headers);
         } else {
           res.writeHead(200, headers);
@@ -50,20 +51,19 @@ const router = (req, res) => {
           return;
         };
 
-        console.log('Incoming Form:', fields, files);
-
         const formTitle = fields.title;
         const formDesc = fields.description;
-        const formMedia = files.media;
-        const { type, path } = formMedia;
+        const formVideo = files.media[0];
+        const formThumbnail = files.media[1];
 
         const post = {
           title: formTitle,
           description: formDesc,
-          mediaPath: path
+          videoPath: formVideo.path,
+          thumbnailPath: formThumbnail.path
         };
 
-        if (type.includes('jpeg') || type.includes('mp4')) {
+        if (formThumbnail.type.includes('jpeg') && formVideo.type.includes('mp4')) {
           return PostDAO.createPost(post)
             .then(({ dataValues }) => {
               const getFileUrlPath = (path) => {
@@ -72,9 +72,10 @@ const router = (req, res) => {
                 return `http://localhost:8000/media?file=${filePart}`;
               };
 
-              const { title, description, mediaPath, createdAt } = dataValues;
-              const media = getFileUrlPath(mediaPath);
-              const post = { title, description, media, createdAt };
+              const { title, description, videoPath, thumbnailPath, createdAt } = dataValues;
+              const video = getFileUrlPath(videoPath);
+              const thumbnail = getFileUrlPath(thumbnailPath)
+              const post = { title, description, video, thumbnail, createdAt };
 
               res.writeHead(201, headers);
               res.write(JSON.stringify(post));
@@ -88,15 +89,11 @@ const router = (req, res) => {
               return;
             });
         } else {
-          if (type.includes('video')) {
-            // convert media to mp4
-            res.end();
-            return;
-          } else if (type.includes('image')) {
-            // convert media to jpeg
-            res.end();
-            return;
-          };
+          // convert video -> mp4
+          // convert image -> jpeg
+          res.writeHead(500, headers);
+          res.end();
+          return;
         };
       });
     };
