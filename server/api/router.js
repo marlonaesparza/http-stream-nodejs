@@ -5,8 +5,9 @@ const url = require('url');
 const { inspect } = require('util');
 const PostDAO = require('./../dao/post');
 const headers = require('./../config/cors');
+const preparePost = require('./../utils/preparePost');
 
-const cloudConvert = new CloudConvert(process.env.CLOUDCONVERT_SBKEY, true);
+// const cloudConvert = new CloudConvert(process.env.CLOUDCONVERT_SBKEY, true);
 
 const router = (req, res) => {
   const reqMethod = req.method.toLowerCase();
@@ -56,7 +57,7 @@ const router = (req, res) => {
         const formVideo = files.media[0];
         const formThumbnail = files.media[1];
 
-        const post = {
+        const postEntry = {
           title: formTitle,
           description: formDesc,
           videoPath: formVideo.path,
@@ -64,19 +65,9 @@ const router = (req, res) => {
         };
 
         if (formThumbnail.type.includes('jpeg') && formVideo.type.includes('mp4')) {
-          return PostDAO.createPost(post)
+          return PostDAO.createPost(postEntry)
             .then(({ dataValues }) => {
-              const getFileUrlPath = (path) => {
-                let pathParts = path.split('/');
-                let filePart = pathParts[pathParts.length - 1];
-                return `http://localhost:8000/media?file=${filePart}`;
-              };
-
-              const { title, description, videoPath, thumbnailPath, createdAt } = dataValues;
-              const video = getFileUrlPath(videoPath);
-              const thumbnail = getFileUrlPath(thumbnailPath)
-              const post = { title, description, video, thumbnail, createdAt };
-
+              const post = preparePost(dataValues);
               res.writeHead(201, headers);
               res.write(JSON.stringify(post));
               res.end();
