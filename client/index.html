@@ -3,7 +3,9 @@
   <head>
     <!--  -->
     <link rel='stylesheet' href='./styles/layout.css'>
+    <link rel='stylesheet' href='./styles/mediaPlayer.css'>
     <link rel='stylesheet' href='./styles/mediaRslts.css'>
+    <link rel='stylesheet' href='./styles/postForm.css'>
     <!--  -->
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <!--  -->
@@ -23,34 +25,44 @@
       <!--  -->
       <section id='media-player-cont'>
         <div id='current-media'>
-          [ current media ]
+          <video id='video' class='video' controls autoplay>
+            <source id='video-mp4' src='' type='video/mp4'>
+          </video>
         </div>
         <div id='current-media-info'>
-          [ current media info ]
+          <p id='video-title' class='video-info info-title'>[title]</p>
+          <p id='video-description' class='video-info'>[description]</p>
+          <p id='video-timestamp' class='video-info info-time'>[timestamp]</p>
         </div>
       </section>
       <!--  -->
       <section id='media-post-cont' class='hidden'>
         <form id='media-post-form'>
-          <labe for='post-title'>Title:</labe>
-          <input type='text' id='post-title' name='post-title' class='file-input'><br/>
+          <label for='post-title' class='label'>Title:</label>
+          <input type='text' id='post-title' name='post-title' class='file-input'>
           
-          <label for='post-description'>Description:</label><br/>
-          <textarea type='text' id='post-description' name='post-description' class='file-input'></textarea><br/>
+          <label for='post-description' class='label'>Description:</label>
+          <textarea type='text' id='post-description' name='post-description' rows='10' class='file-input textarea-input'></textarea>
           
-          <label for='post-media'>Share a moment:</label><br/>
-          <input type='file' id='post-media' name='post-media' class='file-input'/><br/>
+          <label for='post-video' class='label'>Video (mp4):</label>
+          <input type='file' id='post-video' name='post-video' class='file-input'/>
+
+          <label for='post-thumbnail' class='label'>Thumbnail (jpeg):</label>
+          <input type='file' id='post-thumbnail' name='post-thumbnail' class='file-input'/>
           
-          <input type='submit'>
+          <br/><input type='submit' class='submit-input'>
         </form>
       </section>
       <!--  -->
       <section id='media-list-cont'>
         <div id='media-srch-cont'>
-          <input id='srch-inp' name='srch-inp' type='text'>
+          <form id='search-form'>
+            <input id='srch-inp' name='srch-inp' type='text' class='search-input'>
+            <input id='srch-submit' name='srch-submit' type='submit' class='search-input' value='search'>
+          </form>
         </div>
         <div id='media-rslts-cont'>
-          [ media results ]
+          <!--  -->
         </div>
       </section>
       <!--  -->
@@ -61,5 +73,6 @@
     <script src='./scripts/callbacks.js'></script>
     <script src='./scripts/postControls.js'></script>
     <script src='./scripts/postForm.js'></script>
+    <script src='./scripts/loadVideos.js'></script>
   </body>
 </html>

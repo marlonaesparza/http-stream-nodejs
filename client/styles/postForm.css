@@ -1,0 +1,24 @@
+#media-post-form {
+  display: grid;
+  grid-template-columns: 3fr 9fr;
+  row-gap: 5px;
+  padding: 5px;
+}
+
+
+.label {
+  display: block;
+  font-size: .9rem;
+}
+
+.file-input {
+  display: block;
+}
+
+.textarea-input {
+  resize: none;
+}
+
+.submit-input {
+  padding: 5px
+}

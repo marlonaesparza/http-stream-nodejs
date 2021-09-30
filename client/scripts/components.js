@@ -1,27 +1,33 @@
 const createMediaResult = (props) => {
-  const { title, description , media, createdAt} = props;
+  const { id, title, thumbnail, createdAt} = props;
   const resultCont = document.createElement('article');
   resultCont.setAttribute('class', 'rslt-cont');
+
   const resultThumbCont = document.createElement('div');
   resultThumbCont.setAttribute('class', 'rslt-thumb-cont');
+
   const resultThumb = document.createElement('img');
   resultThumb.setAttribute('class', 'rslt-thumb')
-  resultThumb.setAttribute('src', media);
+  resultThumb.setAttribute('src', thumbnail);
   resultThumb.setAttribute('alt', title);
   resultThumbCont.appendChild(resultThumb);
+
   const resultInfoCont = document.createElement('div');
   resultInfoCont.setAttribute('class', 'rslt-info-cont');
+
   const resultTitle = document.createElement('p');
+  resultTitle.addEventListener('click', onClickMediaResult);
   resultTitle.setAttribute('class', 'rslt-info');
+  resultTitle.setAttribute('id', `${id}`);
+  resultTitle.classList.add('result-title');
   resultTitle.textContent = `${title}`;
-  const resultDesc = document.createElement('p');
-  resultDesc.setAttribute('class', 'rslt-info');
-  resultDesc.textContent = `${description}`;
+
   const resultTimestamp = document.createElement('p');
   resultTimestamp.setAttribute('class', 'rslt-info');
+  resultTimestamp.classList.add('result-time');
   resultTimestamp.textContent = `${createdAt}`;
+
   resultInfoCont.appendChild(resultTitle);
-  resultInfoCont.appendChild(resultDesc);
   resultInfoCont.appendChild(resultTimestamp);
   resultCont.appendChild(resultThumbCont);
   resultCont.appendChild(resultInfoCont);
@@ -29,13 +35,11 @@ const createMediaResult = (props) => {
 };
 
 const updateCurrentMedia = (props) => {
-  const { title, description , media, createdAt } = props;
-  const getMediaType = (string) => string.split('.')[1];
-  const mediaType = getMediaType(media);
-  
-  const videoEl = document.getElementById('current-video');
-  const sourceEl = document.getElementById('media-mp4')
+  const { title, description , video, createdAt } = props;
   const currentVideoEl = currentMedia.removeChild(videoEl);
-
-  
+  currentVideoEl.setAttribute('src', video);
+  currentMedia.appendChild(currentVideoEl);
+  videoTitle.textContent = `${title}`;
+  videoDesc.textContent = `${description}`;
+  videoTimeStamp.textContent = `${createdAt}`;
 };

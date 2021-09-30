@@ -1,12 +1,11 @@
 const { IncomingForm } = require('formidable');
-const CloudConvert = require('cloudconvert');
 const fs = require('fs');
 const url = require('url');
 const { inspect } = require('util');
 const PostDAO = require('./../dao/post');
 const headers = require('./../config/cors');
-
-const cloudConvert = new CloudConvert(process.env.CLOUDCONVERT_SBKEY, true);
+const preparePost = require('./../utils/preparePost');
+const prepareAllPosts = require('./../utils/prepareAllPosts');
 
 const router = (req, res) => {
   const reqMethod = req.method.toLowerCase();
@@ -22,6 +21,7 @@ const router = (req, res) => {
 
       return fs.readFile(filePath, (err, chunk) => {
         if (err) {
+          console.log(inspect(err));
           res.writeHead(400, headers);
         } else {
           res.writeHead(200, headers);
@@ -31,6 +31,21 @@ const router = (req, res) => {
         res.end();
         return;
       })
+    };
+
+    if (pathname === '/media/all') {
+      return PostDAO.getAllPosts()
+        .then(results => {
+          const allPosts = prepareAllPosts(results);
+          res.writeHead(200, headers);
+          res.write(JSON.stringify(allPosts));
+          res.end();
+        })
+        .catch(error => {
+          console.log(inspect(error));
+          res.writeHead(500, headers);
+          res.end();
+        });
     };
   };
 
@@ -52,28 +67,20 @@ const router = (req, res) => {
 
         const formTitle = fields.title;
         const formDesc = fields.description;
-        const formMedia = files.media;
-        const { type, path } = formMedia;
+        const formVideo = files.media[0];
+        const formThumbnail = files.media[1];
 
-        const post = {
+        const postEntry = {
           title: formTitle,
           description: formDesc,
-          mediaPath: path
+          videoPath: formVideo.path,
+          thumbnailPath: formThumbnail.path
         };
 
-        if (type.includes('jpeg') || type.includes('mp4')) {
-          return PostDAO.createPost(post)
+        if (formThumbnail.type.includes('jpeg') && formVideo.type.includes('mp4')) {
+          return PostDAO.createPost(postEntry)
             .then(({ dataValues }) => {
-              const getFileUrlPath = (path) => {
-                let pathParts = path.split('/');
-                let filePart = pathParts[pathParts.length - 1];
-                return `http://localhost:8000/media?file=${filePart}`;
-              };
-
-              const { title, description, mediaPath, createdAt } = dataValues;
-              const media = getFileUrlPath(mediaPath);
-              const post = { title, description, media, createdAt };
-
+              const post = preparePost(dataValues);
               res.writeHead(201, headers);
               res.write(JSON.stringify(post));
               res.end();
@@ -86,15 +93,11 @@ const router = (req, res) => {
               return;
             });
         } else {
-          if (type.includes('video')) {
-            // convert media to mp4
-            res.end();
-            return;
-          } else if (type.includes('image')) {
-            // convert media to jpeg
-            res.end();
-            return;
-          };
+          // convert video -> mp4
+          // convert image -> jpeg
+          res.writeHead(400, headers);
+          res.end();
+          return;
         };
       });
     };

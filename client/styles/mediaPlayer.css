@@ -1,0 +1,20 @@
+#current-media {
+  padding: 5px;
+}
+
+.video {
+  width: 100%;
+}
+
+.video-info {
+  padding: 5px;
+  font-size: .9rem;
+}
+
+.info-title {
+  font-size: 1.3rem;
+}
+
+.info-time {
+  font-size: .8rem;
+}

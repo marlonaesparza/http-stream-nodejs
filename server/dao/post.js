@@ -3,14 +3,14 @@ const Post = require('./../../database/models/post');
 class PostDAO {
   constructor() {
     this.createPost = this.createPost.bind(this);
-    this.getPosts = this.getPosts.bind(this);
+    this.getAllPosts = this.getAllPosts.bind(this);
   };
 
   createPost(post) {
     return Post.create(post);
   };
 
-  getPosts() {
+  getAllPosts() {
     return Post.findAll();
   }
 };

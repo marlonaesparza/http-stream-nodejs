@@ -5,9 +5,10 @@ postForm.addEventListener('submit', async (e) => {
 
   const titleValidated = validateTitle(titleInput.value);
   const descValidated = validateDesc(descInput.value);
-  const mediaValidated = await validateMedia(mediaInput.files[0]);
+  const videoValidated = await validateVideo(videoInput.files[0]);
+  const imageValidated = await validateImage(imageInput.files[0]);
 
-  if (!titleValidated || !descValidated || !mediaValidated) {
+  if (!titleValidated || !descValidated || !videoValidated || !imageValidated) {
     console.log('Form value(s) are not valid.');
     return;
   };
@@ -15,7 +16,8 @@ postForm.addEventListener('submit', async (e) => {
   const formData = new FormData();
   formData.append('title', titleInput.value);
   formData.append('description', descInput.value);
-  formData.append('media', mediaInput.files[0]);
+  formData.append('media', videoInput.files[0]);
+  formData.append('media', imageInput.files[0]);
 
   return ajaxPostForm(formData, onSuccessfulPost);
 });
@@ -30,10 +32,11 @@ const ajaxPostForm = (formData, cb) => {
     contentType: false,
     processData: false,
     success: (data) => {
-      cb(postForm, data);
+      const result = JSON.parse(data);
+      cb(postForm, result);
     },
     error: (e) => {
-      console.log('POST UPLOAD ERROR - :', e);
+      console.log('POST Upload Error:', e);
     }
   });
 };
@@ -54,7 +57,11 @@ const validateDesc = (description) => {
     false;
 };
 
-const validateMedia = async (media) => {
+const validateVideo = async (media) => {
+  if (!media) {
+    return false;
+  };
+
   if (media.type.includes('video')) {
     try {
       const vidDuration = await getVideoDuration(media);
@@ -62,17 +69,22 @@ const validateMedia = async (media) => {
 
     } catch(e) {
       console.log(e);
-    }
-  } else if (media.type.includes('image')) {
-    return true;
-  }
-
-  return false;
+      return false;
+    };
+  };
 };
+
+const validateImage = (media) => {
+  if (!media) {
+    return false;
+  };
+
+  return media.type.includes('image') ? true : false;
+}
 
 // ------------------------ //
 
-// INPUT VALIDATION HELPER METHODS //
+// HELPER METHODS //
 
 const getVideoDuration = (video) => {
   return new Promise((resolve, reject) => {
