@@ -1,13 +1,11 @@
 const { IncomingForm } = require('formidable');
-const CloudConvert = require('cloudconvert');
 const fs = require('fs');
 const url = require('url');
 const { inspect } = require('util');
 const PostDAO = require('./../dao/post');
 const headers = require('./../config/cors');
 const preparePost = require('./../utils/preparePost');
-
-// const cloudConvert = new CloudConvert(process.env.CLOUDCONVERT_SBKEY, true);
+const prepareAllPosts = require('./../utils/prepareAllPosts');
 
 const router = (req, res) => {
   const reqMethod = req.method.toLowerCase();
@@ -33,6 +31,21 @@ const router = (req, res) => {
         res.end();
         return;
       })
+    };
+
+    if (pathname === '/media/all') {
+      return PostDAO.getAllPosts()
+        .then(results => {
+          const allPosts = prepareAllPosts(results);
+          res.writeHead(200, headers);
+          res.write(JSON.stringify(allPosts));
+          res.end();
+        })
+        .catch(error => {
+          console.log(inspect(error));
+          res.writeHead(500, headers);
+          res.end();
+        });
     };
   };
 
@@ -82,7 +95,7 @@ const router = (req, res) => {
         } else {
           // convert video -> mp4
           // convert image -> jpeg
-          res.writeHead(500, headers);
+          res.writeHead(400, headers);
           res.end();
           return;
         };

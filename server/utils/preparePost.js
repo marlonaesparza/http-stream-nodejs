@@ -1,5 +1,5 @@
 module.exports = (datavalues) => {
-  const { title, description, videoPath, thumbnailPath, createdAt } = datavalues;
+  const { id, title, description, videoPath, thumbnailPath, createdAt } = datavalues;
   
   const getFileUrlPath = (path) => {
     let pathParts = path.split('/');
@@ -9,5 +9,5 @@ module.exports = (datavalues) => {
 
   const video = getFileUrlPath(videoPath);
   const thumbnail = getFileUrlPath(thumbnailPath)
-  return { title, description, video, thumbnail, createdAt };
+  return { id, title, description, video, thumbnail, createdAt };
 };

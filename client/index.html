@@ -25,14 +25,14 @@
       <!--  -->
       <section id='media-player-cont'>
         <div id='current-media'>
-          <video id='video' class='video' controls>
+          <video id='video' class='video' controls autoplay>
             <source id='video-mp4' src='' type='video/mp4'>
           </video>
         </div>
         <div id='current-media-info'>
-          <p id='video-title' class='video-info info-title'>Title</p>
-          <p id='video-description' class='video-info'>Description</p>
-          <p id='video-timestamp' class='video-info info-time'>Timestamp</p>
+          <p id='video-title' class='video-info info-title'>[title]</p>
+          <p id='video-description' class='video-info'>[description]</p>
+          <p id='video-timestamp' class='video-info info-time'>[timestamp]</p>
         </div>
       </section>
       <!--  -->
@@ -73,5 +73,6 @@
     <script src='./scripts/callbacks.js'></script>
     <script src='./scripts/postControls.js'></script>
     <script src='./scripts/postForm.js'></script>
+    <script src='./scripts/loadVideos.js'></script>
   </body>
 </html>
